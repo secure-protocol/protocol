@@ -81,5 +81,25 @@ func TestSig(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+}
 
+func TestSignWrong(t *testing.T) {
+	pri, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	if err != nil {
+		t.Fatal(err)
+	}
+	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithUnaryInterceptor(GetSignInterceptor(pri)))
+	if err != nil {
+		t.Fatal(err)
+	}
+	client := blockchain.NewBlockchainServerClient(conn)
+
+	_, err = client.GenAddress(context.Background(), &blockchain.GenAddressReq{
+		AccountType: blockchain.AccountType_Tron,
+		Bid:         "test",
+		Nums:        1,
+	})
+	if err == nil {
+		t.Fatal("should be err")
+	}
 }
