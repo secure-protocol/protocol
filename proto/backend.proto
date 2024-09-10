@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option go_package = "./proto/backend";
+
+package backend;
+
+import "blockchain.proto";
+
+service Backend{
+
+  rpc SayHello(HelloReq) returns (HelloRes){}
+
+}
+message Basic{
+  string city = 1;
+}
+message HelloReq{
+
+  blockchain.AccountType type = 1;
+
+  string myName = 2;
+  string myGender = 3;
+}
+message HelloRes{
+  string reply = 1;
+  Basic  b  =2;
+}

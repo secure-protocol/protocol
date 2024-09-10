@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option go_package = "github.com/secure-protocol/protocol/proto/signer";
+package signer;
+
+import "blockchain.proto";
+
+
+enum GenType{
+  Direct = 0; // 直接生成
+  Mnemonic = 1; // 助记词生成
+  Derive = 2; // 派生
+}
+
+message StorePrivateKey {
+  blockchain.AccountType AccountType = 1;
+  GenType GenType = 2;
+  bytes Data = 3;
+  bool Encrypted = 4;
+  bool Delete = 5;
+}

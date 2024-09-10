@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+option go_package = "github.com/secure-protocol/protocol/proto/signer";
+package signer;
+
+import "blockchain.proto";
+
+
+
+message Address{
+  blockchain.AccountType type = 1;
+  string bid = 2;
+  string addr = 3;
+}
+
+message SignReq{
+  Address address = 1;
+  bytes content = 2;
+  // 收款地址
+  Address receiveAddress = 3;
+  // 是否为内部转账
+  bool insideTransfer = 4;
+}
+
+
+message SignRes{
+  bytes sign = 1;
+}
+
+message GenReq{
+  blockchain.AccountType type = 1;
+  string bid = 2; // 业务ID
+  uint64 nums = 3; // 生成地址数量,取值区间为[1,100]
+}
+
+message GenRes{
+  repeated Address address = 1;
+}
+
+
+message MigrationReq {
+  string StorePath = 1;
+  string Key2Path = 2;
+  string Key3Path = 3;
+  string KeyHash = 4;
+  string DBType = 5;
+}
+
+message MigrationRes {
+  bool Success = 1;
+}
+
+
+service Signer {
+  rpc Sign(SignReq)returns(SignRes){}
+  rpc Gen(GenReq)returns(GenRes){}
+  rpc Migration(MigrationReq)returns(MigrationRes){}
+}
