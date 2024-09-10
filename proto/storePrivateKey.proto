@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/secure-protocol/protocol/proto/signer";
+option go_package = "./proto/signer";
 package signer;
 
 import "blockchain.proto";

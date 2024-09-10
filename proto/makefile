@@ -7,7 +7,7 @@ build-signer:build-blockchain
 
 
 build-storePrivateKey:build-blockchain
-	protoc --go_out=../../../../  --go-grpc_out=../../../../  ./storePrivateKey.proto
+	protoc --go_out=../  --go-grpc_out=../  ./storePrivateKey.proto
 
 
 build-backend:build-blockchain

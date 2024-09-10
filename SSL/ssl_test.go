@@ -3,7 +3,7 @@ package SSL
 import (
 	"context"
 	"fmt"
-	"github.com/payment/protocol/proto/signer"
+	"github.com/secure-protocol/protocol/proto/signer"
 	"google.golang.org/grpc"
 	"net"
 	"testing"
