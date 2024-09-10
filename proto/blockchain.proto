@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+option go_package = "github.com/secure-protocol/protocol/proto/blockchain";
+package blockchain;
+
+enum AccountType {
+  Tron = 0;
+}
+
+message BlockchainNetwork {
+  uint64 uid = 1; // 网络唯一id
+  string key = 2; // 网络唯一key
+  string name = 3; // 网络名
+  string chainID = 4; // chainID
+  AccountType accountKey = 5; // 网络账号类型
+  uint64 decimal = 6;  // 原生币精度
+  uint64 displayDecimal = 7; // 原生币展示精度
+  string logo =8; // logo
+  string symbol = 9;  // 原生币名
+  string fullSymbol = 10; // 原生币全名
+  string archType = 11; //  技术底层evm，cosmos。。。
+  repeated string rpcURL = 12; // rpc url
+
+  uint64 confirmStrategy = 13; // 确认策略
+  uint64 blockGenerationRate = 14; // 出块时间
+
+  string scanURL = 15; //浏览器地址
+}
+
+// 操作枚举
+enum APIEnum {
+  // todo
+  SendTx = 0;
+
+}
+
+message GenAddressReq {
+  AccountType accountType= 1;
+  string bid = 2;
+  int64 nums = 3;
+}
+
+message GenAddressRes {
+  repeated string address = 1;
+}
+
+service BlockchainServer {
+ rpc GenAddress(GenAddressReq)returns(GenAddressRes){};
+
+}
