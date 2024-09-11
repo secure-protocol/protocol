@@ -52,9 +52,21 @@ message MigrationRes {
   bool Success = 1;
 }
 
+message ImportReq{
+  string bid = 1;
+  blockchain.AccountType accountType =2;
+  bytes EncryptedPrivateKey = 3;
+  Address EncryptedBy = 4;
+}
+
+message ImportRes{
+  Address address = 1;
+}
+
 
 service Signer {
   rpc Sign(SignReq)returns(SignRes){}
   rpc Gen(GenReq)returns(GenRes){}
+  rpc Import(ImportReq)returns(ImportRes){}
   rpc Migration(MigrationReq)returns(MigrationRes){}
 }

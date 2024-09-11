@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	Signer_Sign_FullMethodName      = "/signer.Signer/Sign"
 	Signer_Gen_FullMethodName       = "/signer.Signer/Gen"
+	Signer_Import_FullMethodName    = "/signer.Signer/Import"
 	Signer_Migration_FullMethodName = "/signer.Signer/Migration"
 )
 
@@ -30,6 +31,7 @@ const (
 type SignerClient interface {
 	Sign(ctx context.Context, in *SignReq, opts ...grpc.CallOption) (*SignRes, error)
 	Gen(ctx context.Context, in *GenReq, opts ...grpc.CallOption) (*GenRes, error)
+	Import(ctx context.Context, in *ImportReq, opts ...grpc.CallOption) (*ImportRes, error)
 	Migration(ctx context.Context, in *MigrationReq, opts ...grpc.CallOption) (*MigrationRes, error)
 }
 
@@ -61,6 +63,16 @@ func (c *signerClient) Gen(ctx context.Context, in *GenReq, opts ...grpc.CallOpt
 	return out, nil
 }
 
+func (c *signerClient) Import(ctx context.Context, in *ImportReq, opts ...grpc.CallOption) (*ImportRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ImportRes)
+	err := c.cc.Invoke(ctx, Signer_Import_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *signerClient) Migration(ctx context.Context, in *MigrationReq, opts ...grpc.CallOption) (*MigrationRes, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(MigrationRes)
@@ -77,6 +89,7 @@ func (c *signerClient) Migration(ctx context.Context, in *MigrationReq, opts ...
 type SignerServer interface {
 	Sign(context.Context, *SignReq) (*SignRes, error)
 	Gen(context.Context, *GenReq) (*GenRes, error)
+	Import(context.Context, *ImportReq) (*ImportRes, error)
 	Migration(context.Context, *MigrationReq) (*MigrationRes, error)
 	mustEmbedUnimplementedSignerServer()
 }
@@ -93,6 +106,9 @@ func (UnimplementedSignerServer) Sign(context.Context, *SignReq) (*SignRes, erro
 }
 func (UnimplementedSignerServer) Gen(context.Context, *GenReq) (*GenRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Gen not implemented")
+}
+func (UnimplementedSignerServer) Import(context.Context, *ImportReq) (*ImportRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Import not implemented")
 }
 func (UnimplementedSignerServer) Migration(context.Context, *MigrationReq) (*MigrationRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Migration not implemented")
@@ -154,6 +170,24 @@ func _Signer_Gen_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Signer_Import_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImportReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SignerServer).Import(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Signer_Import_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SignerServer).Import(ctx, req.(*ImportReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Signer_Migration_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(MigrationReq)
 	if err := dec(in); err != nil {
@@ -186,6 +220,10 @@ var Signer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Gen",
 			Handler:    _Signer_Gen_Handler,
+		},
+		{
+			MethodName: "Import",
+			Handler:    _Signer_Import_Handler,
 		},
 		{
 			MethodName: "Migration",

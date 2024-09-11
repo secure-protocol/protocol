@@ -10,6 +10,7 @@ enum GenType{
   Direct = 0; // 直接生成
   Mnemonic = 1; // 助记词生成
   Derive = 2; // 派生
+  Import = 3; // 导入
 }
 
 enum Algorithm {
