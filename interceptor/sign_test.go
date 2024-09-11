@@ -36,14 +36,14 @@ func init() {
 		if err != nil {
 			panic(err)
 		}
-		grpcServer := grpc.NewServer(grpc.Creds(insecure.NewCredentials()), grpc.UnaryInterceptor(GetVeryInterceptor(&pri.PublicKey)))
+		grpcServer := grpc.NewServer(grpc.Creds(insecure.NewCredentials()), grpc.UnaryInterceptor(GetVeryInterceptor(&pri.PublicKey, ecdsa.VerifyASN1)))
 		blockchain.RegisterBlockchainServerServer(grpcServer, &fakeServer{})
 		err = grpcServer.Serve(lis)
 		if err != nil {
 			panic(err)
 		}
 	}()
-	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithUnaryInterceptor(GetSignInterceptor(pri)))
+	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithUnaryInterceptor(GetSignInterceptor(pri, EcdsaSign)))
 	if err != nil {
 		panic(err)
 	}
@@ -83,12 +83,16 @@ func TestSig(t *testing.T) {
 	}
 }
 
+func EcdsaSign(pri *ecdsa.PrivateKey, h []byte) ([]byte, error) {
+	return ecdsa.SignASN1(rand.Reader, pri, h)
+}
+
 func TestSignWrong(t *testing.T) {
 	pri, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	if err != nil {
 		t.Fatal(err)
 	}
-	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithUnaryInterceptor(GetSignInterceptor(pri)))
+	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithUnaryInterceptor(GetSignInterceptor(pri, EcdsaSign)))
 	if err != nil {
 		t.Fatal(err)
 	}
