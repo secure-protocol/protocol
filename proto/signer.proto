@@ -31,10 +31,12 @@ message GenReq{
   blockchain.AccountType type = 1;
   string bid = 2; // 业务ID
   uint64 nums = 3; // 生成地址数量,取值区间为[1,100]
+  bool needPublic = 4; // 是否需要返回公钥
 }
 
 message GenRes{
   repeated Address address = 1;
+  repeated bytes public = 2;
 }
 
 

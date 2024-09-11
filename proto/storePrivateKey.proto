@@ -12,10 +12,15 @@ enum GenType{
   Derive = 2; // 派生
 }
 
+enum Algorithm {
+  ecdsa_secp256k1 = 0;
+}
+
 message StorePrivateKey {
   blockchain.AccountType AccountType = 1;
   GenType GenType = 2;
   bytes Data = 3;
   bool Encrypted = 4;
   bool Delete = 5;
+  Algorithm algorithm = 6;
 }
