@@ -34,10 +34,17 @@ enum APIEnum {
 
 }
 
+enum AddressType {
+  receive = 0;
+  gather = 1;
+}
+
 message GenAddressReq {
   AccountType accountType= 1;
-  string bid = 2;
-  int64 nums = 3;
+  AddressType addressType = 2;
+  string bid = 3;
+  int64 nums = 4;
+  bool withUSDT = 5;
 }
 
 message GenAddressRes {

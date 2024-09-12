@@ -43,6 +43,7 @@ func init() {
 			panic(err)
 		}
 	}()
+
 	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithUnaryInterceptor(GetSignInterceptor(pri, EcdsaSign)))
 	if err != nil {
 		panic(err)
