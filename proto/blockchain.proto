@@ -45,6 +45,7 @@ message GenAddressReq {
   string bid = 3;
   int64 nums = 4;
   bool withUSDT = 5;
+  string networkKey = 6;
 }
 
 message GenAddressRes {
