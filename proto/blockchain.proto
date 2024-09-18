@@ -52,7 +52,38 @@ message GenAddressRes {
   repeated string address = 1;
 }
 
+/*message ListenReceiveReq {
+  string networkKey = 1;
+  uint64 tokenID = 2;
+  string address = 3;
+  string orderID = 4;
+}
+
+message ListenReceiveRes {
+
+}*/
+
+message SendToReq {
+  string networkKey = 1;
+  uint64 tokenID = 2;
+  string from = 3;
+  string to = 4;
+  uint64 amount = 5;
+  bool isOut = 6; // to 是否为外部地址
+}
+
+message SendToRes {
+  string txHash = 1;
+}
+
 service BlockchainServer {
  rpc GenAddress(GenAddressReq)returns(GenAddressRes){};
+
+ // rpc ListenReceive(ListenReceiveReq)returns(ListenReceiveRes){}; // 通过  Redis
+  // hash  ListReceive  address（过期，手动取消）  =》 orderId
+  //  mq {txHash，orderId，address}
+
+
+ rpc SendTo(SendToReq)returns(SendToRes); // 不需要通过mq异步返回交易结果
 
 }

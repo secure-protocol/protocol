@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	BlockchainServer_GenAddress_FullMethodName = "/blockchain.BlockchainServer/GenAddress"
+	BlockchainServer_SendTo_FullMethodName     = "/blockchain.BlockchainServer/SendTo"
 )
 
 // BlockchainServerClient is the client API for BlockchainServer service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BlockchainServerClient interface {
 	GenAddress(ctx context.Context, in *GenAddressReq, opts ...grpc.CallOption) (*GenAddressRes, error)
+	SendTo(ctx context.Context, in *SendToReq, opts ...grpc.CallOption) (*SendToRes, error)
 }
 
 type blockchainServerClient struct {
@@ -47,11 +49,22 @@ func (c *blockchainServerClient) GenAddress(ctx context.Context, in *GenAddressR
 	return out, nil
 }
 
+func (c *blockchainServerClient) SendTo(ctx context.Context, in *SendToReq, opts ...grpc.CallOption) (*SendToRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SendToRes)
+	err := c.cc.Invoke(ctx, BlockchainServer_SendTo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BlockchainServerServer is the server API for BlockchainServer service.
 // All implementations must embed UnimplementedBlockchainServerServer
 // for forward compatibility.
 type BlockchainServerServer interface {
 	GenAddress(context.Context, *GenAddressReq) (*GenAddressRes, error)
+	SendTo(context.Context, *SendToReq) (*SendToRes, error)
 	mustEmbedUnimplementedBlockchainServerServer()
 }
 
@@ -64,6 +77,9 @@ type UnimplementedBlockchainServerServer struct{}
 
 func (UnimplementedBlockchainServerServer) GenAddress(context.Context, *GenAddressReq) (*GenAddressRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GenAddress not implemented")
+}
+func (UnimplementedBlockchainServerServer) SendTo(context.Context, *SendToReq) (*SendToRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendTo not implemented")
 }
 func (UnimplementedBlockchainServerServer) mustEmbedUnimplementedBlockchainServerServer() {}
 func (UnimplementedBlockchainServerServer) testEmbeddedByValue()                          {}
@@ -104,6 +120,24 @@ func _BlockchainServer_GenAddress_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BlockchainServer_SendTo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendToReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlockchainServerServer).SendTo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BlockchainServer_SendTo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlockchainServerServer).SendTo(ctx, req.(*SendToReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BlockchainServer_ServiceDesc is the grpc.ServiceDesc for BlockchainServer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +148,10 @@ var BlockchainServer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GenAddress",
 			Handler:    _BlockchainServer_GenAddress_Handler,
+		},
+		{
+			MethodName: "SendTo",
+			Handler:    _BlockchainServer_SendTo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
