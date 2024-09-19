@@ -1,4 +1,4 @@
-package platform
+package structure
 
 import (
 	"github.com/shopspring/decimal"
