@@ -1,5 +1,5 @@
 package constants
 
 const (
-	RedisKeyListeningAddressMap = "ListeningAddressMap"
+	RedisKeyListeningAddressMap = "ListeningAddressMap_"
 )

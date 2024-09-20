@@ -83,11 +83,33 @@ func (f *Filter) BatchAdd(ctx context.Context, dataList ...[]byte) error {
 	for _, bytes := range dataList {
 		locations = append(locations, f.getLocations(bytes)...)
 	}
+	// 去重
+	if uint(len(locations))*10 > f.size {
+		m := make(map[string]struct{}, len(locations))
+		j := 0
+		for i := 0; i < len(locations); i++ {
+			if _, ok := m[locations[i]]; !ok {
+				m[locations[i]] = struct{}{}
+				locations[j] = locations[i]
+				j++
+			}
+		}
+		locations = locations[:j]
+	}
+
 	cmd := setScript.EvalSha(ctx, f.client, []string{f.key}, locations)
 	if errors.Is(cmd.Err(), redis.Nil) {
 		return nil
 	}
 	return cmd.Err()
+}
+
+func (f *Filter) BatchAddString(ctx context.Context, dataList ...string) error {
+	dataBytesList := make([][]byte, 0, len(dataList))
+	for _, s := range dataList {
+		dataBytesList = append(dataBytesList, []byte(s))
+	}
+	return f.BatchAdd(ctx, dataBytesList...)
 }
 
 func (f *Filter) Exist(ctx context.Context, data []byte) (bool, error) {
