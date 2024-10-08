@@ -28,6 +28,8 @@ type Token struct {
 	// 最小单位
 	MinUnit string `json:"minUnit" gorm:"type:varchar(255);comment:最小单位"`
 
+	Decimal uint `json:"decimal" gorm:"default:6"`
+
 	// 展示精度
 	DisplayDecimal uint `json:"displayDecimal" gorm:"type:varchar(255);comment:展示精度"`
 

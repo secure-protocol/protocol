@@ -6,7 +6,6 @@ import (
 
 type Network struct {
 	gorm.Model
-	// ？
 	NetworkKey string `json:"networkKey,omitempty" gorm:"type:varchar(255);comment:唯一标识符"`
 	AccountKey string `json:"accountKey,omitempty" gorm:"type:varchar(255);comment:关联的私钥地址生成类型key"`
 	ChainID    string `json:"chainID,omitempty" gorm:"type:varchar(255);comment:某些网络对应的chainID"`
@@ -26,7 +25,10 @@ type Network struct {
 
 	SystemAvailableTypes uint64 `json:"UseTypes,omitempty" gorm:"comment:系统使用模块"`
 
+	HangTime uint64 `json:"orderExpireSecond" gorm:"comment:挂起时间 单位minutes;default:10"`
+
 	ChainServerGrpcURL string
+	Status             bool `json:"status" gorm:"comment:network 启用状态;default:true"`
 }
 
 const (

@@ -5,3 +5,9 @@ type OrderEvent struct {
 	Address string `json:"address"`
 	TxHash  string `json:"tx_hash"`
 }
+
+type TransEvent struct {
+	TxID          string `json:"txID"`
+	NetworkKey    string `json:"networkKey"`
+	PendingStatus string `json:"status"`
+}

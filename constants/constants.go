@@ -2,8 +2,16 @@ package constants
 
 const (
 	RedisKeyListeningAddressMap = "ListeningAddressMap_"
+	RedisKeyBlockInfo           = "BlockInfo_"
+	RedisKeyBlockInfoBlockNum   = "latestBlockNumber"
 )
 
 const (
-	OrderEventKey = "OrderEvent"
+	OrderEventExchange = "OrderEvent"
+	OrderEventQueue    = "OrderEventQueue"
+)
+
+const (
+	TransEventExchange = "TransEvent"
+	TransEventQueue    = "TransEventQueue"
 )
