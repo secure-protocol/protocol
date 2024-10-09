@@ -23,6 +23,8 @@ type Token struct {
 
 	Logo string `json:"logo" gorm:"type:varchar(255);comment:logo图标"`
 
+	Company string `json:"company" gorm:"type:varchar(255);comment:公司/项目 名"`
+
 	// 单位
 	DefaultUnit string `json:"defaultUnit" gorm:"type:varchar(255);comment:单位"`
 	// 最小单位
