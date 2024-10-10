@@ -76,14 +76,28 @@ message SendToRes {
   string txHash = 1;
 }
 
+message Address{
+  blockchain.AccountType type = 1;
+  string bid = 2;
+  string addr = 3;
+}
+
+message ImportReq{
+  string bid = 1;
+  blockchain.AccountType accountType =2;
+  bytes EncryptedPrivateKey = 3;
+  Address EncryptedBy = 4;
+}
+
+message ImportRes{
+  Address address = 1;
+}
+
 service BlockchainServer {
  rpc GenAddress(GenAddressReq)returns(GenAddressRes){};
 
- // rpc ListenReceive(ListenReceiveReq)returns(ListenReceiveRes){}; // 通过  Redis
-  // hash  ListReceive  address（过期，手动取消）  =》 orderId
-  //  mq {txHash，orderId，address}
+ rpc SendTo(SendToReq)returns(SendToRes){}; // 不需要通过mq异步返回交易结果
 
-
- rpc SendTo(SendToReq)returns(SendToRes); // 不需要通过mq异步返回交易结果
+  rpc Import(ImportReq)returns(ImportRes){};
 
 }
