@@ -11,7 +11,7 @@ type Address struct {
 	// NetWorkKey enum: TRON  ETH  BSC  TRON-SHASTA
 	NetworkKey string `json:"chain,omitempty" gorm:"type:varchar(255);comment:TRON  ETH  BSC  TRON-SHASTA"`
 	// Status enum: 1 空闲（未分配给收款订单） free 2 占用 occupy  3 禁用 drop
-	Status string `json:"status,omitempty" gorm:"type:enum('free','occupy','drop');default:free;"`
+	Status string `json:"status,omitempty" gorm:"type:enum('free','occupy','drop','taken');default:free;"`
 	// 用户ID 查询时经常作为条件，建立索引
 	UserID int64 `json:"userID,omitempty" gorm:"default:0;index"`
 }
@@ -20,6 +20,7 @@ const (
 	AddressStatusFree   = "free"
 	AddressStatusOccupy = "occupy"
 	AddressStatusDrop   = "drop"
+	AddressStatusTaken  = "taken"
 )
 
 const (
