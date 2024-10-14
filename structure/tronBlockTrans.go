@@ -8,9 +8,10 @@ type TronBlockTrans struct {
 	TxID       string `json:"txID,omitempty" gorm:"unique;not null;type:varchar(255);comment:交易id或者交易hash"`
 	ChainName  string `json:"chainName,omitempty" gorm:"type:varchar(255);comment:链"`
 	NetworkKey string `json:"networkKey,omitempty" gorm:"type:varchar(255);comment:网络唯一标识符"`
-	From       string `json:"from,omitempty" gorm:"type:varchar(255);comment:发送地址"`
-	To         string `json:"to,omitempty" gorm:"type:varchar(255);comment:对应块交易中的to地址,可以是合约地址"`
-	Receive    string `json:"receive,omitempty" gorm:"type:varchar(255);comment: 最终资产接收地址，合约交易则为data中的接收地址，非合约则为to地址"`
+	From       string `json:"from,omitempty" gorm:"type:varchar(255);comment:区块链上的发送地址"`
+	To         string `json:"to,omitempty" gorm:"type:varchar(255);comment:区块链交易中的to地址,可以是合约地址"`
+	Send       string `json:"send,omitempty" gorm:"type:varchar(255);comment:资产发送地址"`
+	Receive    string `json:"receive,omitempty" gorm:"type:varchar(255);comment: 资产接收地址"`
 
 	NativeValue   string `json:"nativeValue,omitempty" gorm:"type:varchar(255) ;comment: 主代币转账消耗金额，最小精度单位"`
 	TokenAmount   string `json:"tokenAmount,omitempty" gorm:"type:varchar(255);comment: 代币转账金额，最小精度单位"`

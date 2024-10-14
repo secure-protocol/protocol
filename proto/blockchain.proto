@@ -66,8 +66,8 @@ message ListenReceiveRes {
 message SendToReq {
   string networkKey = 1;
   uint64 tokenID = 2;
-  string from = 3;
-  string to = 4;
+  string send = 3;
+  string receive = 4;
   uint64 amount = 5;
   bool isOut = 6; // to 是否为外部地址
 }
