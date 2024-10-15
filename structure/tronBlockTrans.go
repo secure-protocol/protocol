@@ -36,6 +36,7 @@ type TronBlockTrans struct {
 	PendingStatus string `json:"pendingStatus" gorm:"type:enum('new','pending','solid')"'`
 
 	IsSystemSendTrans bool `json:"isSystemTrans,omitempty" gorm:"comment: 是否是我们自己发送的交易"`
+	IsSendOutTrans    bool `json:"isSendOutTrans,omitempty" gorm:"comment: 是否是发送到外部的交易"`
 
 	///hash为 4c3c637901c3cd26c751411505ffc028d9f0666b541053b135138e1bf097f17f的 "timestamp": 638637268693249270 ，所以此字段不可信
 	TransactionCreateTime uint64 `json:"transactionCreateTime,omitempty" gorm:"comment: 交易生成时间"`

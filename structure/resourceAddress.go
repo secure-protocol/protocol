@@ -12,11 +12,11 @@ type ResourceAddress struct {
 	// Status enum: 1 空闲 free 2 占用 occupy  3 禁用 drop
 	Status string `json:"status,omitempty" gorm:"type:varchar(255);comment:1 空闲 free 2 占用 occupy  3 禁用 drop"`
 	// stake
-	StakeEnergy    uint64
-	StakeBandwidth uint64
+	StakeTotalEnergy    uint64
+	StakeTotalBandwidth uint64
 	// 资源余量
-	BandWidth uint64
-	Energy    uint64
-	USDT      uint64
+	CanUseBandWidth uint64
+	CanUseEnergy    uint64
+	USDT            uint64
 	//
 }
