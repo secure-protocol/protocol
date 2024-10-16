@@ -31,7 +31,7 @@ type Network struct {
 	ChainServerGrpcURL string
 	Status             bool `json:"status" gorm:"comment:network 启用状态;default:true"`
 
-	NetFee decimal.Decimal `json:"netFee,omitempty" gorm:"type:decimal(30,6);comment:手续费"`
+	NetFee decimal.Decimal `json:"netFee,omitempty" gorm:"type:decimal(40,20);comment:手续费"`
 }
 
 const (
