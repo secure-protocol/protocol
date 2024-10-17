@@ -56,6 +56,7 @@ const (
 	BusinessTypeWithdraw = "withdraw"
 	BusinessTypeRefund   = "refund"
 	BusinessTypeCollect  = "collect"
+	BusinessTypeOther    = "other"
 )
 
 const (

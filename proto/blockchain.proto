@@ -70,6 +70,8 @@ message SendToReq {
   string receive = 4;
   uint64 amount = 5;
   bool isOut = 6; // to 是否为外部地址
+  string businessType = 7;
+  bool forceSend = 8; // 是否强制发送
 }
 
 message SendToRes {
