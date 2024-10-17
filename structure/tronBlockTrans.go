@@ -47,7 +47,16 @@ type TronBlockTrans struct {
 	TransactionBlockTime uint64 `json:"transactionBlockTime,omitempty" gorm:"comment: 交易所以区块时间"`
 
 	DealStatus string `json:"dealStatus" gorm:"type:enum('new','pendingDealed','solidDealed')"`
+
+	BusinessType string `json:"BusinessType" gorm:"type:enum('','pay','withdraw','refund','collect','other');default:'';comment:业务类型"`
 }
+
+const (
+	BusinessTypePayOrder = "pay"
+	BusinessTypeWithdraw = "withdraw"
+	BusinessTypeRefund   = "refund"
+	BusinessTypeCollect  = "collect"
+)
 
 const (
 	DealStatusNew     = "new"
