@@ -5,7 +5,7 @@ import "gorm.io/gorm"
 type Address struct {
 	gorm.Model
 	Bid     string `gorm:"type:varchar(255)"`
-	Address string `json:"address,omitempty" gorm:"type:varchar(255);unique;comment:地址"`
+	Address string `json:"address,omitempty" gorm:"unique;type:varchar(255);unique;comment:地址"`
 	// Type enum: 1 收款 receive 2 资金归集地址（打款，备付） gather
 	Type string `json:"type,omitempty" gorm:"type:enum('receive','gather')"`
 	// NetWorkKey enum: TRON  ETH  BSC  TRON-SHASTA

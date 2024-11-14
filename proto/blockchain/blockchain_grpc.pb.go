@@ -22,6 +22,7 @@ const (
 	BlockchainServer_GenAddress_FullMethodName = "/blockchain.BlockchainServer/GenAddress"
 	BlockchainServer_SendTo_FullMethodName     = "/blockchain.BlockchainServer/SendTo"
 	BlockchainServer_Import_FullMethodName     = "/blockchain.BlockchainServer/Import"
+	BlockchainServer_Balance_FullMethodName    = "/blockchain.BlockchainServer/Balance"
 )
 
 // BlockchainServerClient is the client API for BlockchainServer service.
@@ -31,6 +32,7 @@ type BlockchainServerClient interface {
 	GenAddress(ctx context.Context, in *GenAddressReq, opts ...grpc.CallOption) (*GenAddressRes, error)
 	SendTo(ctx context.Context, in *SendToReq, opts ...grpc.CallOption) (*SendToRes, error)
 	Import(ctx context.Context, in *ImportReq, opts ...grpc.CallOption) (*ImportRes, error)
+	Balance(ctx context.Context, in *BalanceReq, opts ...grpc.CallOption) (*BalanceRes, error)
 }
 
 type blockchainServerClient struct {
@@ -71,6 +73,16 @@ func (c *blockchainServerClient) Import(ctx context.Context, in *ImportReq, opts
 	return out, nil
 }
 
+func (c *blockchainServerClient) Balance(ctx context.Context, in *BalanceReq, opts ...grpc.CallOption) (*BalanceRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BalanceRes)
+	err := c.cc.Invoke(ctx, BlockchainServer_Balance_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BlockchainServerServer is the server API for BlockchainServer service.
 // All implementations must embed UnimplementedBlockchainServerServer
 // for forward compatibility.
@@ -78,6 +90,7 @@ type BlockchainServerServer interface {
 	GenAddress(context.Context, *GenAddressReq) (*GenAddressRes, error)
 	SendTo(context.Context, *SendToReq) (*SendToRes, error)
 	Import(context.Context, *ImportReq) (*ImportRes, error)
+	Balance(context.Context, *BalanceReq) (*BalanceRes, error)
 	mustEmbedUnimplementedBlockchainServerServer()
 }
 
@@ -96,6 +109,9 @@ func (UnimplementedBlockchainServerServer) SendTo(context.Context, *SendToReq) (
 }
 func (UnimplementedBlockchainServerServer) Import(context.Context, *ImportReq) (*ImportRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Import not implemented")
+}
+func (UnimplementedBlockchainServerServer) Balance(context.Context, *BalanceReq) (*BalanceRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Balance not implemented")
 }
 func (UnimplementedBlockchainServerServer) mustEmbedUnimplementedBlockchainServerServer() {}
 func (UnimplementedBlockchainServerServer) testEmbeddedByValue()                          {}
@@ -172,6 +188,24 @@ func _BlockchainServer_Import_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BlockchainServer_Balance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BalanceReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlockchainServerServer).Balance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BlockchainServer_Balance_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlockchainServerServer).Balance(ctx, req.(*BalanceReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BlockchainServer_ServiceDesc is the grpc.ServiceDesc for BlockchainServer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -190,6 +224,10 @@ var BlockchainServer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Import",
 			Handler:    _BlockchainServer_Import_Handler,
+		},
+		{
+			MethodName: "Balance",
+			Handler:    _BlockchainServer_Balance_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
