@@ -15,6 +15,7 @@ enum GenType{
 
 enum Algorithm {
   ecdsa_secp256k1 = 0;
+  ed25519 = 1;
 }
 
 message StorePrivateKey {
