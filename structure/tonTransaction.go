@@ -15,13 +15,14 @@ type TonBlockTrans struct {
 	Account         string `json:"account,omitempty" gorm:"type:varchar(255);comment:交易发送的账户地址,非用户友好地址"`
 	FriendlyAccount string `json:"friendlyAccount,omitempty" gorm:"type:varchar(255);comment:交易发送的账户地址,用户友好地址"`
 
-	Send    string `json:"send,omitempty" gorm:"type:varchar(255);comment:资产发送地址"`
-	Receive string `json:"receive,omitempty" gorm:"type:varchar(255);comment: 资产接收地址"`
-
-	NativeValue   string `json:"nativeValue,omitempty" gorm:"type:varchar(255) ;comment: 主代币转账消耗金额，最小精度单位"`
-	TokenAmount   string `json:"tokenAmount,omitempty" gorm:"type:varchar(255);comment: 代币转账金额，最小精度单位"`
-	NativeDecimal uint64 `json:"nativeDecimal,omitempty" gorm:"comment: 主代币精度"`
-	TokenDecimal  uint64 `json:"tokenDecimal,omitempty" gorm:"comment: 合约代币精度"`
+	Send            string `json:"send,omitempty" gorm:"type:varchar(255);comment:资产发送地址 hex raw 地址"`
+	FriendlySend    string `json:"friendlySend,omitempty" gorm:"type:varchar(255);comment:资产发送地址友好地址"`
+	Receive         string `json:"receive,omitempty" gorm:"type:varchar(255);comment: 资产接收地址  hex raw 地址"`
+	FriendlyReceive string `json:"friendlyReceive,omitempty" gorm:"type:varchar(255);comment:资产发送地址友好地址"`
+	NativeValue     string `json:"nativeValue,omitempty" gorm:"type:varchar(255) ;comment: 主代币转账消耗金额，最小精度单位"`
+	TokenAmount     string `json:"tokenAmount,omitempty" gorm:"type:varchar(255);comment: 代币转账金额，最小精度单位"`
+	NativeDecimal   uint64 `json:"nativeDecimal,omitempty" gorm:"comment: 主代币精度"`
+	TokenDecimal    uint64 `json:"tokenDecimal,omitempty" gorm:"comment: 合约代币精度"`
 
 	//JettonWalletAddress    string `json:"contractAddress,omitempty" gorm:"type: varchar(255);comment: 如果是合约交易 合约地址 不为空"`
 	CoinID     uint64 `json:"coinID,omitempty" gorm:"type:varchar(255);comment:代币id"`
