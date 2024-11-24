@@ -85,7 +85,8 @@ message SendToReq {
   uint64 amount = 5;
   bool isOut = 6; // to 是否为外部地址
   string businessType = 7;
-  bool forceSend = 8; // 是否强制发送
+  bool forceSend = 8;
+  string memo = 9; // 某些网络的备注
 }
 
 message SendToRes {
