@@ -5,15 +5,16 @@ import "gorm.io/gorm"
 type TonBlockTrans struct {
 	gorm.Model
 
-	TxID       string `json:"txID,omitempty" gorm:"unique;not null;type:varchar(255);comment:交易id或者交易hash"`
+	TxID       string `json:"txID,omitempty" gorm:"unique;not null;type:varchar(255);comment:交易id或者交易hash(base64格式)"`
 	ChainName  string `json:"chainName,omitempty" gorm:"type:varchar(255);comment:链"`
 	NetworkKey string `json:"networkKey,omitempty" gorm:"type:varchar(255);comment:网络唯一标识符"`
 	//From       string `json:"from,omitempty" gorm:"type:varchar(255);comment:区块链上的发送地址"`
 	//To         string `json:"to,omitempty" gorm:"type:varchar(255);comment:区块链交易中的to地址,可以是合约地址"`
 	TraceID string `json:"traceID,omitempty" gorm:"type:varchar(255);comment:交易追踪ID"`
 
-	Account         string `json:"account,omitempty" gorm:"type:varchar(255);comment:交易发送的账户地址,非用户友好地址"`
-	FriendlyAccount string `json:"friendlyAccount,omitempty" gorm:"type:varchar(255);comment:交易发送的账户地址,用户友好地址"`
+	JETTONMasterAddress string `json:"JETTONMasterAddress,omitempty" gorm:"type:varchar(255);comment:jetton代币地址"`
+	Account             string `json:"account,omitempty" gorm:"type:varchar(255);comment:交易发送的账户地址,非用户友好地址"`
+	FriendlyAccount     string `json:"friendlyAccount,omitempty" gorm:"type:varchar(255);comment:交易发送的账户地址,用户友好地址"`
 
 	Send            string `json:"send,omitempty" gorm:"type:varchar(255);comment:资产发送地址 hex raw 地址"`
 	FriendlySend    string `json:"friendlySend,omitempty" gorm:"type:varchar(255);comment:资产发送地址友好地址"`
