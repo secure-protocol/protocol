@@ -1,4 +1,4 @@
-package RoTracing
+package ginSpan
 
 import (
 	"context"
@@ -17,11 +17,11 @@ const (
 		https://github.com/open-telemetry/opentelemetry-go-contrib/blob/main/instrumentation/github.com/gin-gonic/gin/otelgin/gintrace.go
 
 	*/
-	TracerKey = "Rootel-go-contrib-tracer"
+	TracerKey = "otel-go-contrib-tracer"
 )
 
 func Span(ctx context.Context, spanName string, opts ...trace.SpanStartOption) (spanctx context.Context, span trace.Span) {
-	//dic.GetSystemConfig[string](ctx, base.NewService(), "TracerKey")
+
 	value := ctx.Value(TracerKey)
 	tracer, ok := value.(trace.Tracer)
 	if !ok {

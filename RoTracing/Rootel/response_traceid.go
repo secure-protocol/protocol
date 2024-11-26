@@ -2,13 +2,13 @@ package Rootel
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/secure-protocol/protocol/RoTracing"
+	"github.com/secure-protocol/protocol/RoTracing/ginSpan"
 	"go.opentelemetry.io/otel/propagation"
 )
 
 func ResponseTraceID() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		spanctx, span := RoTracing.Span(c, "Response Propagation")
+		spanctx, span := ginSpan.Span(c, "Response Propagation")
 		if span == nil {
 			c.Next()
 			return

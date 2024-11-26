@@ -36,7 +36,10 @@ func init() {
 		if err != nil {
 			panic(err)
 		}
-		grpcServer := grpc.NewServer(grpc.Creds(insecure.NewCredentials()), grpc.UnaryInterceptor(GetVeryInterceptor(&pri.PublicKey, EthVerify)))
+		grpcServer := grpc.NewServer(
+			grpc.Creds(insecure.NewCredentials()),
+			grpc.UnaryInterceptor(GetVeryInterceptor(&pri.PublicKey, EthVerify)),
+		)
 		blockchain.RegisterBlockchainServerServer(grpcServer, &fakeServer{})
 		err = grpcServer.Serve(lis)
 		if err != nil {
@@ -44,7 +47,11 @@ func init() {
 		}
 	}()
 
-	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithUnaryInterceptor(GetSignInterceptor(pri, EthSign)))
+	conn, err := grpc.NewClient(
+		addr,
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithUnaryInterceptor(GetSignInterceptor(pri, EthSign)),
+	)
 	if err != nil {
 		panic(err)
 	}
