@@ -32,7 +32,6 @@ func Span(ctx context.Context, spanName string, opts ...trace.SpanStartOption) (
 	// gin 特殊
 	if c, ok := ctx.(*gin.Context); ok {
 		spanctx, span = tracer.Start(c.Request.Context(), spanName, opts...)
-
 		/*
 			在这里每次注入新的 Attr
 			1. host
