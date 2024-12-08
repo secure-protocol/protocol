@@ -6,6 +6,7 @@ package blockchain;
 enum AccountType {
   Tron = 0;
   Ton = 1;
+  Solana = 2;
 }
 
 message BlockchainNetwork {
