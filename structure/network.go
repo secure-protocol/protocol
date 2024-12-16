@@ -3,6 +3,7 @@ package structure
 import (
 	"github.com/shopspring/decimal"
 	"gorm.io/gorm"
+	"time"
 )
 
 type Network struct {
@@ -32,6 +33,11 @@ type Network struct {
 	Status             bool `json:"status" gorm:"comment:network 启用状态;default:true"`
 
 	NetFee decimal.Decimal `json:"netFee,omitempty" gorm:"type:decimal(40,20);comment:手续费"`
+
+	Pause          bool      `gorm:"comment:是否暂停使用"`
+	PauseNoticeID  uint      `gorm:"comment:暂停公告"`
+	PauseStartTime time.Time `gorm:"comment:暂停开始时间"`
+	PauseEndTime   time.Time `gorm:"comment:暂停结束时间"`
 }
 
 const (

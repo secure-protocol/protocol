@@ -3,6 +3,7 @@ package structure
 import (
 	"github.com/shopspring/decimal"
 	"gorm.io/gorm"
+	"time"
 )
 
 // Token
@@ -39,4 +40,9 @@ type Token struct {
 	FeeRate decimal.Decimal `json:"feeRate,omitempty" gorm:"type:varchar(255);comment:转账费率，部分token在转账时在合约中需要付出手续费"`
 	// Status 启用状态 on，停用 off
 	Status bool `json:"-" gorm:"comment:启用状态"`
+
+	Pause          bool      `gorm:"comment:是否暂停使用"`
+	PauseNoticeID  uint      `gorm:"comment:暂停公告"`
+	PauseStartTime time.Time `gorm:"comment:暂停开始时间"`
+	PauseEndTime   time.Time `gorm:"comment:暂停结束时间"`
 }
