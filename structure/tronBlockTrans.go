@@ -33,7 +33,7 @@ type TronBlockTrans struct {
 
 	Status string `json:"status,omitempty" gorm:";enum('new',failed','success')"`
 
-	PendingStatus string `json:"pendingStatus" gorm:"type:enum('new','pending','solid')"'`
+	PendingStatus string `json:"pendingStatus" gorm:"type:enum('new','pending','solid')"`
 
 	IsSystemSendTrans bool `json:"isSystemTrans,omitempty" gorm:"comment: 是否是我们自己发送的交易"`
 	IsSendOutTrans    bool `json:"isSendOutTrans,omitempty" gorm:"comment: 是否是发送到外部的交易"`
@@ -78,7 +78,7 @@ const (
 	TronTransPendingStatusSolid   = "solid"
 )
 
-var m map[string]map[string]bool = map[string]map[string]bool{
+var m = map[string]map[string]bool{
 	TronTransPendingStatus: {
 		TronTransPendingStatusNew:     true,
 		TronTransPendingStatusPending: true,

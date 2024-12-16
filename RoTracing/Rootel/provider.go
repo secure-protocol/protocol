@@ -157,7 +157,7 @@ func httpExporter(ctx context.Context, endpoint string) (*otlptrace.Exporter, er
 		// ),
 	}
 
-	trace, err := otlptracehttp.New(ctx, opts...)
+	t, err := otlptracehttp.New(ctx, opts...)
 
-	return trace, err
+	return t, err
 }

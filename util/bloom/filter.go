@@ -125,7 +125,7 @@ func (f *Filter) getLocations(data []byte) []string {
 	locations := make([]string, f.hashIter)
 	for i := uint(0); i < f.hashIter; i++ {
 		hashValue := hash64(append(data, byte(i)))
-		locations[i] = strconv.FormatUint(uint64(hashValue%uint64(f.size)), 10)
+		locations[i] = strconv.FormatUint(hashValue%uint64(f.size), 10)
 	}
 
 	return locations

@@ -39,10 +39,3 @@ type Network struct {
 	PauseStartTime time.Time `gorm:"comment:暂停开始时间"`
 	PauseEndTime   time.Time `gorm:"comment:暂停结束时间"`
 }
-
-const (
-	CreateMask = 1 << iota
-	StakingMask
-	ReceiveMask
-	PayMask
-)

@@ -61,7 +61,7 @@ func Span(ctx context.Context, spanName string, opts ...trace.SpanStartOption) (
 }
 
 func SpanSetStringAttr(span trace.Span, kvs map[string]string) {
-	attrkv := []attribute.KeyValue{}
+	var attrkv []attribute.KeyValue
 
 	for k, v := range kvs {
 		attrkv = append(attrkv, attribute.KeyValue{
