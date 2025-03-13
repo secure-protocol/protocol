@@ -54,5 +54,5 @@ type TonBlockTrans struct {
 
 	Memo string `json:"memo,omitempty" gorm:"comment: textComment"`
 
-	BusinessType string `json:"BusinessType" gorm:"type:enum('','pay','withdraw','refund','collect','other');default:'';comment:业务类型"`
+	BusinessType string `json:"BusinessType" gorm:"type:enum('','pay','withdraw','refund','collect','other','adminWithdraw');default:'';comment:业务类型"`
 }
