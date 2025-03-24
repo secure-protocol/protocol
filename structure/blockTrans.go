@@ -9,6 +9,7 @@ type Transfer struct {
 	gorm.Model
 	TxHash      string `gorm:"type:varchar(255);comment:solana为sig+index"`
 	BlockHeight uint64 `gorm:"comment:solana为slot"`
+	Timestamp   int64
 	NetworkKey  string `gorm:"type:enum('TRON','TRON-NILE','TRON-SHASTA','SOL','SOL-DEVNET','BTC','ETH')"`
 	TokenSymbol string `json:"type:enum('USDT','BTC','ETH','SOL')"`
 
