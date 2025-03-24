@@ -1,6 +1,54 @@
 package structure
 
-import "gorm.io/gorm"
+import (
+	"github.com/shopspring/decimal"
+	"gorm.io/gorm"
+)
+
+type Transfer struct {
+	gorm.Model
+	TxHash      string `gorm:"type:varchar(255);comment:solana为sig+index"`
+	BlockHeight uint64 `gorm:"comment:solana为slot"`
+	NetworkKey  string `gorm:"type:enum('TRON','TRON-NILE','TRON-SHASTA','SOL','SOL-DEVNET','BTC','ETH')"`
+	TokenSymbol string `json:"type:enum('USDT','BTC','ETH','SOL')"`
+
+	Sender   string `gorm:"comment:资金发送者"`
+	Receiver string `gorm:"comment:资金接收者"`
+
+	IsSystemSendTrans bool `gorm:"comment: 是否是我们自己发送的交易"`
+	IsSendOutTrans    bool `gorm:"comment: 是否是发送到外部的交易"`
+
+	PendingStatus string `gorm:"type:enum('new','pending','solid');comment:块确认状态"`
+	DealStatus    string `gorm:"type:enum('new','pendingDealed','solidDealed');comment:交易处理状态"`
+	Status        string `gorm:"type:enum('new','failed','success');comment:交易状态"`
+
+	Amount decimal.Decimal `gorm:"comment:金额"`
+	Unit   string          `gorm:"comment:单位"`
+
+	SenderBalance   decimal.Decimal `gorm:"comment:资金发送者发送成功后的资金余额"`
+	ReceiverBalance decimal.Decimal `gorm:"comment:资金接收者 交易成功后的资金余额"`
+
+	BillID string `gorm:"comment:账单ID"`
+}
+
+const (
+	TransferDealStatusNew     = "new"
+	TransferDealStatusPending = "pendingDealed"
+	TransferDealStatusSolid   = "solidDealed"
+)
+
+const (
+	TransferStatusNew     = "new"
+	TransferStatusSuccess = "success"
+	TransferStatusFailed  = "failed"
+)
+
+const (
+	TransferPendingStatus        = "TronTransPendingStatus"
+	TransferPendingStatusNew     = "new"
+	TransferPendingStatusPending = "pending"
+	TransferPendingStatusSolid   = "solid"
+)
 
 type SolanaBlockTrans struct {
 	gorm.Model
