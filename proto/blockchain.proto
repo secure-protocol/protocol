@@ -88,6 +88,7 @@ message SendToReq {
   string businessType = 7;
   bool forceSend = 8;
   string memo = 9; // 某些网络的备注
+  string billID= 10; // 账单ID，
 }
 
 message SendToRes {

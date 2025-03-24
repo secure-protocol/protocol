@@ -64,9 +64,25 @@ message ImportRes{
 }
 
 
+message BatchSignReq{
+  repeated Address address = 1;
+  bytes content = 2;
+  // 收款地址
+  repeated Address receiveAddress = 3;
+  // 是否为内部转账
+  bool insideTransfer = 4;
+}
+
+
+message BatchSignRes{
+  repeated bytes  sign = 1;
+}
+
+
 service Signer {
   rpc Sign(SignReq)returns(SignRes){}
   rpc Gen(GenReq)returns(GenRes){}
   rpc Import(ImportReq)returns(ImportRes){}
   rpc Migration(MigrationReq)returns(MigrationRes){}
+  rpc BatchSign(BatchSignReq)returns(BatchSignRes){}
 }
