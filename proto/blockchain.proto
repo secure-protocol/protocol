@@ -41,6 +41,7 @@ enum AddressType {
   gather = 1;
 }
 
+
 message GenAddressReq {
   AccountType accountType= 1;
   AddressType addressType = 2;
@@ -48,6 +49,7 @@ message GenAddressReq {
   int64 nums = 4;
   bool withUSDT = 5;
   string networkKey = 6;
+  string tokenKind = 7; // solana 地址与币种绑定
 }
 
 message GenAddressRes {

@@ -10,8 +10,9 @@ type Transfer struct {
 	TxHash      string `gorm:"type:varchar(255);comment:solana为sig+index"`
 	BlockHeight uint64 `gorm:"comment:solana为slot"`
 	Timestamp   int64
-	NetworkKey  string `gorm:"type:enum('TRON','TRON-NILE','TRON-SHASTA','SOL','SOL-DEVNET','BTC','ETH')"`
-	TokenSymbol string `json:"type:enum('USDT','BTC','ETH','SOL')"`
+
+	NetworkKey string `gorm:"type:varchar(255)"`
+	TokenKind  string `json:"type:varchar(255)"`
 
 	Sender   string `gorm:"comment:资金发送者"`
 	Receiver string `gorm:"comment:资金接收者"`
@@ -19,11 +20,11 @@ type Transfer struct {
 	IsSystemSendTrans bool `gorm:"comment: 是否是我们自己发送的交易"`
 	IsSendOutTrans    bool `gorm:"comment: 是否是发送到外部的交易"`
 
-	PendingStatus string `gorm:"type:enum('new','pending','solid');comment:块确认状态"`
-	DealStatus    string `gorm:"type:enum('new','pendingDealed','solidDealed');comment:交易处理状态"`
-	Status        string `gorm:"type:enum('new','failed','success');comment:交易状态"`
+	PendingStatus string `gorm:"type:enum('new','pending','solid');default:'new';comment:块确认状态"`
+	DealStatus    string `gorm:"type:enum('new','pendingDealed','solidDealed');default:'new';comment:交易处理状态"`
+	Status        string `gorm:"type:enum('new','failed','success');default:'new';comment:交易状态"`
 
-	Amount decimal.Decimal `gorm:"comment:金额"`
+	Amount decimal.Decimal `gorm:"type:decimal(40,20);comment:金额"`
 	Unit   string          `gorm:"comment:单位"`
 
 	SenderBalance   decimal.Decimal `gorm:"comment:资金发送者发送成功后的资金余额"`

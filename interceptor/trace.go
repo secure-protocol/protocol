@@ -16,12 +16,10 @@ const (
 
 func TracingSeverInterceptor() grpc.UnaryServerInterceptor {
 	return func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
-		fmt.Println("==============server interceptor=======================")
 		md, ok := metadata.FromIncomingContext(ctx)
 		if !ok {
 			return nil, fmt.Errorf("metadata is required")
 		}
-		fmt.Println("=====md:========", md)
 		traceID := md.Get(TraceIDKey)
 		if len(traceID) == 0 {
 			return nil, fmt.Errorf("RoTracing-id is required")
