@@ -7,7 +7,7 @@ import (
 
 type Transfer struct {
 	gorm.Model
-	TxHash      string `gorm:"type:varchar(255);comment:solana为sig+index"`
+	TxHash      string `gorm:"type:varchar(255);unique;comment:solana为sig+index tron为交易hash"`
 	BlockHeight uint64 `gorm:"comment:solana为slot"`
 	Timestamp   int64
 
