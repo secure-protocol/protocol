@@ -78,6 +78,15 @@ message BatchSignRes{
   repeated bytes  sign = 1;
 }
 
+message ExportReq{
+  blockchain.AccountType type = 1;
+  string bid = 2; // 业务ID
+  string addr = 3; // 批量生成地址数量,取值区间为[1,100]
+}
+
+message ExportRes{
+  string pr = 1;
+}
 
 service Signer {
   rpc Sign(SignReq)returns(SignRes){}
@@ -85,4 +94,5 @@ service Signer {
   rpc Import(ImportReq)returns(ImportRes){}
   rpc Migration(MigrationReq)returns(MigrationRes){}
   rpc BatchSign(BatchSignReq)returns(BatchSignRes){}
+  rpc Export(ExportReq)returns(ExportRes){}
 }

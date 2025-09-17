@@ -24,6 +24,7 @@ const (
 	Signer_Import_FullMethodName    = "/signer.Signer/Import"
 	Signer_Migration_FullMethodName = "/signer.Signer/Migration"
 	Signer_BatchSign_FullMethodName = "/signer.Signer/BatchSign"
+	Signer_Export_FullMethodName    = "/signer.Signer/Export"
 )
 
 // SignerClient is the client API for Signer service.
@@ -35,6 +36,7 @@ type SignerClient interface {
 	Import(ctx context.Context, in *ImportReq, opts ...grpc.CallOption) (*ImportRes, error)
 	Migration(ctx context.Context, in *MigrationReq, opts ...grpc.CallOption) (*MigrationRes, error)
 	BatchSign(ctx context.Context, in *BatchSignReq, opts ...grpc.CallOption) (*BatchSignRes, error)
+	Export(ctx context.Context, in *ExportReq, opts ...grpc.CallOption) (*ExportRes, error)
 }
 
 type signerClient struct {
@@ -95,6 +97,16 @@ func (c *signerClient) BatchSign(ctx context.Context, in *BatchSignReq, opts ...
 	return out, nil
 }
 
+func (c *signerClient) Export(ctx context.Context, in *ExportReq, opts ...grpc.CallOption) (*ExportRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExportRes)
+	err := c.cc.Invoke(ctx, Signer_Export_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SignerServer is the server API for Signer service.
 // All implementations must embed UnimplementedSignerServer
 // for forward compatibility.
@@ -104,6 +116,7 @@ type SignerServer interface {
 	Import(context.Context, *ImportReq) (*ImportRes, error)
 	Migration(context.Context, *MigrationReq) (*MigrationRes, error)
 	BatchSign(context.Context, *BatchSignReq) (*BatchSignRes, error)
+	Export(context.Context, *ExportReq) (*ExportRes, error)
 	mustEmbedUnimplementedSignerServer()
 }
 
@@ -128,6 +141,9 @@ func (UnimplementedSignerServer) Migration(context.Context, *MigrationReq) (*Mig
 }
 func (UnimplementedSignerServer) BatchSign(context.Context, *BatchSignReq) (*BatchSignRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchSign not implemented")
+}
+func (UnimplementedSignerServer) Export(context.Context, *ExportReq) (*ExportRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Export not implemented")
 }
 func (UnimplementedSignerServer) mustEmbedUnimplementedSignerServer() {}
 func (UnimplementedSignerServer) testEmbeddedByValue()                {}
@@ -240,6 +256,24 @@ func _Signer_BatchSign_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Signer_Export_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExportReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SignerServer).Export(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Signer_Export_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SignerServer).Export(ctx, req.(*ExportReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Signer_ServiceDesc is the grpc.ServiceDesc for Signer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -266,6 +300,10 @@ var Signer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BatchSign",
 			Handler:    _Signer_BatchSign_Handler,
+		},
+		{
+			MethodName: "Export",
+			Handler:    _Signer_Export_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
