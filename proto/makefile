@@ -2,6 +2,14 @@
 build-blockchain:
 	protoc --go_out=../../../../  --go-grpc_out=../../../../  ./blockchain.proto
 
+build-blockchain-win:build-blockchain
+	protoc \
+	  --go_out=blockchain \
+	  --go_opt=paths=source_relative \
+	  --go-grpc_out=blockchain \
+	  --go-grpc_opt=paths=source_relative \
+	  blockchain.proto
+
 build-signer:build-blockchain
 	protoc --go_out=../  --go-grpc_out=../  ./signer.proto
 

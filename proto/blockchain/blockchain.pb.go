@@ -27,7 +27,7 @@ const (
 	AccountType_Tron   AccountType = 0
 	AccountType_Ton    AccountType = 1
 	AccountType_Solana AccountType = 2
-	AccountType_Bsc    AccountType = 3
+	AccountType_Eth    AccountType = 3
 )
 
 // Enum value maps for AccountType.
@@ -36,13 +36,13 @@ var (
 		0: "Tron",
 		1: "Ton",
 		2: "Solana",
-		3: "Bsc",
+		3: "Eth",
 	}
 	AccountType_value = map[string]int32{
 		"Tron":   0,
 		"Ton":    1,
 		"Solana": 2,
-		"Bsc":    3,
+		"Eth":    3,
 	}
 )
 
@@ -321,10 +321,10 @@ func (x *BlockchainNetwork) GetScanURL() string {
 }
 
 type GenAddressReq struct {
-	state       protoimpl.MessageState `protogen:"open.v1"`
-	AccountType AccountType            `protobuf:"varint,1,opt,name=accountType,proto3,enum=blockchain.AccountType" json:"accountType,omitempty"`
-	AddressType AddressType            `protobuf:"varint,2,opt,name=addressType,proto3,enum=blockchain.AddressType" json:"addressType,omitempty"`
-	Bid         string                 `protobuf:"bytes,3,opt,name=bid,proto3" json:"bid,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AccountType   AccountType            `protobuf:"varint,1,opt,name=accountType,proto3,enum=blockchain.AccountType" json:"accountType,omitempty"`
+	AddressType   AddressType            `protobuf:"varint,2,opt,name=addressType,proto3,enum=blockchain.AddressType" json:"addressType,omitempty"`
+	Bid           string                 `protobuf:"bytes,3,opt,name=bid,proto3" json:"bid,omitempty"`
 	Nums          int64                  `protobuf:"varint,4,opt,name=nums,proto3" json:"nums,omitempty"`
 	WithUSDT      bool                   `protobuf:"varint,5,opt,name=withUSDT,proto3" json:"withUSDT,omitempty"`
 	NetworkKey    string                 `protobuf:"bytes,6,opt,name=networkKey,proto3" json:"networkKey,omitempty"`
@@ -729,9 +729,9 @@ func (x *SendToRes) GetTxHash() string {
 }
 
 type Address struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	Type  AccountType            `protobuf:"varint,1,opt,name=type,proto3,enum=blockchain.AccountType" json:"type,omitempty"`
-	Bid   string                 `protobuf:"bytes,2,opt,name=bid,proto3" json:"bid,omitempty"`
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Type          AccountType            `protobuf:"varint,1,opt,name=type,proto3,enum=blockchain.AccountType" json:"type,omitempty"`
+	Bid           string                 `protobuf:"bytes,2,opt,name=bid,proto3" json:"bid,omitempty"`
 	Addr          string                 `protobuf:"bytes,3,opt,name=addr,proto3" json:"addr,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -790,10 +790,10 @@ func (x *Address) GetAddr() string {
 
 type ImportReq struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	Bid                 string      `protobuf:"bytes,1,opt,name=bid,proto3" json:"bid,omitempty"`
-	AccountType         AccountType `protobuf:"varint,2,opt,name=accountType,proto3,enum=blockchain.AccountType" json:"accountType,omitempty"`
-	EncryptedPrivateKey []byte      `protobuf:"bytes,3,opt,name=EncryptedPrivateKey,proto3" json:"EncryptedPrivateKey,omitempty"`
-	EncryptedBy         *Address    `protobuf:"bytes,4,opt,name=EncryptedBy,proto3" json:"EncryptedBy,omitempty"`
+	Bid                 string                 `protobuf:"bytes,1,opt,name=bid,proto3" json:"bid,omitempty"`
+	AccountType         AccountType            `protobuf:"varint,2,opt,name=accountType,proto3,enum=blockchain.AccountType" json:"accountType,omitempty"`
+	EncryptedPrivateKey []byte                 `protobuf:"bytes,3,opt,name=EncryptedPrivateKey,proto3" json:"EncryptedPrivateKey,omitempty"`
+	EncryptedBy         *Address               `protobuf:"bytes,4,opt,name=EncryptedBy,proto3" json:"EncryptedBy,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -1158,7 +1158,7 @@ const file_blockchain_proto_rawDesc = "" +
 	"\x03Ton\x10\x01\x12\n" +
 	"\n" +
 	"\x06Solana\x10\x02\x12\a\n" +
-	"\x03Bsc\x10\x03*\x15\n" +
+	"\x03Eth\x10\x03*\x15\n" +
 	"\aAPIEnum\x12\n" +
 	"\n" +
 	"\x06SendTx\x10\x00*&\n" +
