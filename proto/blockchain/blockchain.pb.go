@@ -578,8 +578,9 @@ type SendToReq struct {
 	IsOut         bool                   `protobuf:"varint,6,opt,name=isOut,proto3" json:"isOut,omitempty"` // to 是否为外部地址
 	BusinessType  string                 `protobuf:"bytes,7,opt,name=businessType,proto3" json:"businessType,omitempty"`
 	ForceSend     bool                   `protobuf:"varint,8,opt,name=forceSend,proto3" json:"forceSend,omitempty"`
-	Memo          string                 `protobuf:"bytes,9,opt,name=memo,proto3" json:"memo,omitempty"`      // 某些网络的备注
-	BillID        string                 `protobuf:"bytes,10,opt,name=billID,proto3" json:"billID,omitempty"` // 账单ID，
+	Memo          string                 `protobuf:"bytes,9,opt,name=memo,proto3" json:"memo,omitempty"`            // 某些网络的备注
+	BillID        string                 `protobuf:"bytes,10,opt,name=billID,proto3" json:"billID,omitempty"`       // 账单ID，
+	AmountStr     string                 `protobuf:"bytes,11,opt,name=amountStr,proto3" json:"amountStr,omitempty"` // 金额字符串
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -680,6 +681,13 @@ func (x *SendToReq) GetMemo() string {
 func (x *SendToReq) GetBillID() string {
 	if x != nil {
 		return x.BillID
+	}
+	return ""
+}
+
+func (x *SendToReq) GetAmountStr() string {
+	if x != nil {
+		return x.AmountStr
 	}
 	return ""
 }
@@ -1111,7 +1119,7 @@ const file_blockchain_proto_rawDesc = "" +
 	"\x04send\x18\x03 \x03(\tR\x04send\x12\x18\n" +
 	"\areceive\x18\x04 \x01(\tR\areceive\"(\n" +
 	"\x0eCollectFundRes\x12\x16\n" +
-	"\x06txHash\x18\x01 \x03(\tR\x06txHash\"\x8f\x02\n" +
+	"\x06txHash\x18\x01 \x03(\tR\x06txHash\"\xad\x02\n" +
 	"\tSendToReq\x12\x1e\n" +
 	"\n" +
 	"networkKey\x18\x01 \x01(\tR\n" +
@@ -1125,7 +1133,8 @@ const file_blockchain_proto_rawDesc = "" +
 	"\tforceSend\x18\b \x01(\bR\tforceSend\x12\x12\n" +
 	"\x04memo\x18\t \x01(\tR\x04memo\x12\x16\n" +
 	"\x06billID\x18\n" +
-	" \x01(\tR\x06billID\"#\n" +
+	" \x01(\tR\x06billID\x12\x1c\n" +
+	"\tamountStr\x18\v \x01(\tR\tamountStr\"#\n" +
 	"\tSendToRes\x12\x16\n" +
 	"\x06txHash\x18\x01 \x01(\tR\x06txHash\"\\\n" +
 	"\aAddress\x12+\n" +

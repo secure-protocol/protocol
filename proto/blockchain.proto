@@ -92,6 +92,7 @@ message SendToReq {
   bool forceSend = 8;
   string memo = 9; // 某些网络的备注
   string billID= 10; // 账单ID，
+  string amountStr = 11; // 金额字符串
 }
 
 message SendToRes {
