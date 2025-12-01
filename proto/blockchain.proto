@@ -119,6 +119,7 @@ message ImportRes{
 message ExportReq {
   string bid = 1;
   blockchain.AccountType accountType = 2;
+  string address = 3;
 }
 
 message ExportRes{
