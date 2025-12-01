@@ -16,7 +16,7 @@ message BlockchainNetwork {
   AccountType accountKey = 5; // 网络账号类型
   uint64 decimal = 6;  // 原生币精度
   uint64 displayDecimal = 7; // 原生币展示精度
-  string logo =8; // logo
+  string logo = 8; // logo
   string symbol = 9;  // 原生币名
   string fullSymbol = 10; // 原生币全名
   string archType = 11; //  技术底层evm，cosmos。。。
@@ -41,7 +41,7 @@ enum AddressType {
 }
 
 message GenAddressReq {
-  AccountType accountType= 1;
+  AccountType accountType = 1;
   AddressType addressType = 2;
   string bid = 3;
   int64 nums = 4;
@@ -101,13 +101,31 @@ message Address{
 
 message ImportReq{
   string bid = 1;
-  blockchain.AccountType accountType =2;
+  blockchain.AccountType accountType = 2;
   bytes EncryptedPrivateKey = 3;
   Address EncryptedBy = 4;
 }
 
 message ImportRes{
   Address address = 1;
+}
+
+message ExportReq {
+  string bid = 1;
+  blockchain.AccountType accountType = 2;
+}
+
+message ExportRes{
+  string EncryptedPrivateKey = 1;
+}
+
+message CheckTransactionReq{
+  string networkKey = 1;
+  string txHash = 2;
+}
+
+message CheckTransactionRes{
+  bool success = 1;
 }
 
 message BalanceReq{
@@ -126,12 +144,17 @@ message BalanceRes{
   repeated BalanceResItem item = 1;
 }
 
-service BlockchainServer {
- rpc GenAddress(GenAddressReq)returns(GenAddressRes){};
 
- rpc SendTo(SendToReq)returns(SendToRes){}; // 不需要通过mq异步返回交易结果
+service BlockchainServer {
+  rpc GenAddress(GenAddressReq)returns(GenAddressRes){};
+
+  rpc SendTo(SendToReq)returns(SendToRes){}; // 不需要通过mq异步返回交易结果
 
   rpc Import(ImportReq)returns(ImportRes){};
 
   rpc Balance(BalanceReq)returns(BalanceRes){};
+
+  rpc Export(ExportReq)returns(ExportRes){};
+
+  rpc CheckTransaction(CheckTransactionReq)returns(CheckTransactionRes){};
 }
