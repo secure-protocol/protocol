@@ -6,6 +6,8 @@ package blockchain;
 enum AccountType {
   Tron = 0;
   Ton = 1;
+  Solana = 2;
+  Eth = 3;
 }
 
 message BlockchainNetwork {
@@ -40,6 +42,7 @@ enum AddressType {
   gather = 1;
 }
 
+
 message GenAddressReq {
   AccountType accountType = 1;
   AddressType addressType = 2;
@@ -47,6 +50,7 @@ message GenAddressReq {
   int64 nums = 4;
   bool withUSDT = 5;
   string networkKey = 6;
+  string tokenKind = 7; // solana 地址与币种绑定
 }
 
 message GenAddressRes {
@@ -87,6 +91,8 @@ message SendToReq {
   string businessType = 7;
   bool forceSend = 8;
   string memo = 9; // 某些网络的备注
+  string billID= 10; // 账单ID，
+  string amountStr = 11; // 金额字符串
 }
 
 message SendToRes {

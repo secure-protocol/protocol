@@ -39,12 +39,13 @@ func Verify(pub *ecdsa.PublicKey, signatureStr string, message proto.Message, ve
 	}
 	h := sha256.Sum256(marshal)
 	ok := verifyFunc(pub, h[:], signature)
-	//ok := ecdsa.VerifyASN1(pub, h[:], signature)
 	if !ok {
 		return errors.New("invalid signature")
 	}
 	return nil
 }
+
+const keySig = "sig"
 
 func GetSignInterceptor(pri *ecdsa.PrivateKey, signFunc SignFunc) grpc.UnaryClientInterceptor {
 	return func(ctx context.Context, method string, req, reply any, cc *grpc.ClientConn, invoker grpc.UnaryInvoker, opts ...grpc.CallOption) error {
@@ -52,15 +53,15 @@ func GetSignInterceptor(pri *ecdsa.PrivateKey, signFunc SignFunc) grpc.UnaryClie
 		if err != nil {
 			return err
 		}
-		ctx = metadata.AppendToOutgoingContext(ctx, "sig", sig)
+		ctx = metadata.AppendToOutgoingContext(ctx, keySig, sig)
 		return invoker(ctx, method, req, reply, cc, opts...)
 	}
 }
 
 func GetVeryInterceptor(pub *ecdsa.PublicKey, verifyFunc VerifyFunc) grpc.UnaryServerInterceptor {
 	return func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
-		v := metadata.ValueFromIncomingContext(ctx, "sig")
-		if len(v) != 1 {
+		v := metadata.ValueFromIncomingContext(ctx, keySig)
+		if len(v) < 1 {
 			return nil, errors.New("invalid signature")
 		}
 		err := Verify(pub, v[0], req.(proto.Message), verifyFunc)

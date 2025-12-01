@@ -27,15 +27,23 @@ type Network struct {
 
 	SystemAvailableTypes uint64 `json:"UseTypes,omitempty" gorm:"comment:系统使用模块"`
 
-	HangTime uint64 `json:"orderExpireSecond" gorm:"comment:挂起时间 单位minutes;default:10"`
+	HangTime          uint64 `json:"orderExpireSecond" gorm:"comment:挂起时间 单位minutes;default:10"`
+	InSettlementTime  uint64 `json:"inSettlementTime" gorm:"comment:向系统充值的到账时间 单位second"`
+	OutSettlementTime uint64 `json:"outSettlementTime" gorm:"comment: 从系统提款的到账时间 单位second"`
 
 	ChainServerGrpcURL string
 	Status             bool `json:"status" gorm:"comment:network 启用状态;default:true"`
 
-	NetFee decimal.Decimal `json:"netFee,omitempty" gorm:"type:decimal(40,20);comment:手续费"`
-
-	Pause          bool      `gorm:"comment:是否暂停使用"`
-	PauseNoticeID  uint      `gorm:"comment:暂停公告"`
-	PauseStartTime time.Time `gorm:"comment:暂停开始时间"`
-	PauseEndTime   time.Time `gorm:"comment:暂停结束时间"`
+	NetFee         decimal.Decimal `json:"netFee,omitempty" gorm:"type:decimal(40,20);comment:手续费"`
+	Pause          bool            `gorm:"comment:是否暂停使用"`
+	PauseNoticeID  uint            `gorm:"comment:暂停公告"`
+	PauseStartTime time.Time       `gorm:"comment:暂停开始时间"`
+	PauseEndTime   time.Time       `gorm:"comment:暂停结束时间"`
 }
+
+const (
+	CreateMask = 1 << iota
+	StakingMask
+	ReceiveMask
+	PayMask
+)

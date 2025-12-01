@@ -1,9 +1,11 @@
 package constants
 
 const (
-	RedisKeyListeningAddressMap = "ListeningAddressMap_"
-	RedisKeyBlockInfo           = "BlockInfo_"
-	RedisKeyBlockInfoBlockNum   = "latestBlockNumber"
+	RedisKeyListeningAddressMap      = "ListeningAddressMap_"
+	RedisKeyBlockInfo                = "BlockInfo_"
+	RedisKeyBlockInfoBlockNum        = "latestBlockNumber"
+	RedisKeyBlockInfoSolidBlockNum   = "latestSolidBlockNumber"
+	RedisKeyBlockInfoPendingBlockNum = "latestPendingBlockNumber"
 )
 
 const (

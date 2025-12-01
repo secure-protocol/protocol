@@ -49,6 +49,7 @@ type TronBlockTrans struct {
 	DealStatus string `json:"dealStatus" gorm:"type:enum('new','pendingDealed','solidDealed')"`
 
 	BusinessType string `json:"BusinessType" gorm:"type:enum('','pay','withdraw','refund','collect','other');default:'';comment:业务类型"`
+	BillID       string `json:"billID" gorm:"type:varchar(255)"`
 }
 
 const (
