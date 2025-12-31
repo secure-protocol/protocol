@@ -1,9 +1,10 @@
 package structure
 
 import (
+	"time"
+
 	"github.com/shopspring/decimal"
 	"gorm.io/gorm"
-	"time"
 )
 
 type Network struct {
@@ -39,6 +40,8 @@ type Network struct {
 	PauseNoticeID  uint            `gorm:"comment:暂停公告"`
 	PauseStartTime time.Time       `gorm:"comment:暂停开始时间"`
 	PauseEndTime   time.Time       `gorm:"comment:暂停结束时间"`
+
+	RenterGrpcURL string `gorm:"type:varchar(255);comment:网络rpcUrl，逗号分隔存储"`
 }
 
 const (

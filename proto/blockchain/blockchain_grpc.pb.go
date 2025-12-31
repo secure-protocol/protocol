@@ -309,3 +309,181 @@ var BlockchainServer_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "blockchain.proto",
 }
+
+const (
+	Renter_SendTo_FullMethodName   = "/blockchain.Renter/SendTo"
+	Renter_Balance_FullMethodName  = "/blockchain.Renter/Balance"
+	Renter_Estimate_FullMethodName = "/blockchain.Renter/Estimate"
+)
+
+// RenterClient is the client API for Renter service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type RenterClient interface {
+	SendTo(ctx context.Context, in *SendToReq, opts ...grpc.CallOption) (*SendToRes, error)
+	Balance(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*RenterBalanceRes, error)
+	Estimate(ctx context.Context, in *EstimateReq, opts ...grpc.CallOption) (*EstimateRes, error)
+}
+
+type renterClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewRenterClient(cc grpc.ClientConnInterface) RenterClient {
+	return &renterClient{cc}
+}
+
+func (c *renterClient) SendTo(ctx context.Context, in *SendToReq, opts ...grpc.CallOption) (*SendToRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SendToRes)
+	err := c.cc.Invoke(ctx, Renter_SendTo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *renterClient) Balance(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*RenterBalanceRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RenterBalanceRes)
+	err := c.cc.Invoke(ctx, Renter_Balance_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *renterClient) Estimate(ctx context.Context, in *EstimateReq, opts ...grpc.CallOption) (*EstimateRes, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EstimateRes)
+	err := c.cc.Invoke(ctx, Renter_Estimate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// RenterServer is the server API for Renter service.
+// All implementations must embed UnimplementedRenterServer
+// for forward compatibility.
+type RenterServer interface {
+	SendTo(context.Context, *SendToReq) (*SendToRes, error)
+	Balance(context.Context, *Empty) (*RenterBalanceRes, error)
+	Estimate(context.Context, *EstimateReq) (*EstimateRes, error)
+	mustEmbedUnimplementedRenterServer()
+}
+
+// UnimplementedRenterServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedRenterServer struct{}
+
+func (UnimplementedRenterServer) SendTo(context.Context, *SendToReq) (*SendToRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method SendTo not implemented")
+}
+func (UnimplementedRenterServer) Balance(context.Context, *Empty) (*RenterBalanceRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method Balance not implemented")
+}
+func (UnimplementedRenterServer) Estimate(context.Context, *EstimateReq) (*EstimateRes, error) {
+	return nil, status.Error(codes.Unimplemented, "method Estimate not implemented")
+}
+func (UnimplementedRenterServer) mustEmbedUnimplementedRenterServer() {}
+func (UnimplementedRenterServer) testEmbeddedByValue()                {}
+
+// UnsafeRenterServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RenterServer will
+// result in compilation errors.
+type UnsafeRenterServer interface {
+	mustEmbedUnimplementedRenterServer()
+}
+
+func RegisterRenterServer(s grpc.ServiceRegistrar, srv RenterServer) {
+	// If the following call panics, it indicates UnimplementedRenterServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&Renter_ServiceDesc, srv)
+}
+
+func _Renter_SendTo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendToReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RenterServer).SendTo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Renter_SendTo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RenterServer).SendTo(ctx, req.(*SendToReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Renter_Balance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RenterServer).Balance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Renter_Balance_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RenterServer).Balance(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Renter_Estimate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EstimateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RenterServer).Estimate(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Renter_Estimate_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RenterServer).Estimate(ctx, req.(*EstimateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Renter_ServiceDesc is the grpc.ServiceDesc for Renter service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Renter_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "blockchain.Renter",
+	HandlerType: (*RenterServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "SendTo",
+			Handler:    _Renter_SendTo_Handler,
+		},
+		{
+			MethodName: "Balance",
+			Handler:    _Renter_Balance_Handler,
+		},
+		{
+			MethodName: "Estimate",
+			Handler:    _Renter_Estimate_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "blockchain.proto",
+}
