@@ -9,7 +9,8 @@ type Address struct {
 	// Type enum: 1 收款 receive 2 资金归集地址（打款，备付） gather
 	Type string `json:"type,omitempty" gorm:"type:enum('receive','gather')"`
 	// NetWorkKey enum: TRON  ETH  BSC  TRON-SHASTA
-	NetworkKey string `json:"chain,omitempty" gorm:"type:varchar(255);comment:TRON  ETH  BSC  TRON-SHASTA"`
+	NetworkKey  string `json:"chain,omitempty" gorm:"type:varchar(255);comment:TRON  ETH  BSC  TRON-SHASTA"`
+	NetworkArch string `gorm:"type:varchar(191)"`
 	// SOLANA网络地址与币种绑定
 	TokenKind string `gorm:"type:varchar(255)"`
 	// Status enum: 1 空闲（未分配给收款订单） free 2 占用 occupy  3 禁用 drop
